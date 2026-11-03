@@ -1,0 +1,43 @@
+======================================================================
+SAMPLE
+balls in play at TGS (all): 648 | modeled set (spatial_ok & conv_ok): 559
+binary day/night set: 428 balls (219 day, 209 night) from 26 games
+outfield-ball subset: 216 (115 day, 101 night)
+home runs excluded from fieldable set: 16 (7 day, 9 night)
+hit rate: all 0.350 | fieldable OF balls 0.421
+
+======================================================================
+A. DISTRIBUTION OF BATTED BALLS (night minus day, 95% cluster-bootstrap CI over games)
+  spray angle (deg, +RF)             diff  -0.37  CI [ -4.04,  +3.31]  
+  pull-signed angle (deg, +pull)     diff  -0.33  CI [ -3.62,  +2.97]  
+  exit velo (mph)                    diff  -1.95  CI [ -5.08,  +0.92]  
+  launch angle (deg)                 diff  -1.48  CI [ -8.63,  +6.13]  
+  OF-ball est. carry (ft)            diff  +3.12  CI [-10.91, +17.80]  
+  KS test on spray-angle distribution (ignores clustering, so optimistic): D=0.063, p=0.763
+
+======================================================================
+B. HIT RATE BY ZONE x LIGHT  (outfield balls; Fisher exact per zone, Holm-adjusted)
+zone  n_day  hit_day  lo_day  hi_day  n_night  hit_night  lo_night  hi_night     p  p_holm
+  LF     35    0.514   0.356   0.670       33      0.667     0.496     0.802 0.227   0.681
+  CF     40    0.275   0.161   0.428       44      0.386     0.257     0.534 0.356   0.711
+  RF     40    0.350   0.221   0.505       24      0.375     0.212     0.573 1.000   1.000
+
+======================================================================
+C. DOES THE LIGHT EFFECT VARY ACROSS THE FIELD?  (logistic, outfield balls)
+   P(hit) ~ spline(spray) + exit velo + launch angle  [+ night]  [+ night x spline(spray)]
+  Naive LRT, main effect of night (M1 vs M0): chi2=0.96, p=0.326
+  Naive LRT, night x location interaction (M2 vs M1): chi2=1.68, df=4, p=0.795
+  GEE (clustered by game) night main effect: log-odds +0.36 (OR 1.44), p=0.204
+  GEE Wald test, night x location interaction: chi2=2.72, df=4, p=0.605   <-- the key test
+  Sensitivity, continuous sun elevation x location (GEE Wald): chi2=4.96, df=4, p=0.291
+  Sensitivity, adding inning control: interaction chi2=3.14, df=4, p=0.535
+
+======================================================================
+D. POWER: smallest day-vs-night hit-rate gap detectable (80% power, alpha=.05, two-sided) per zone
+zone  n_day  n_night  base_hit_rate  detectable_gap_pts
+  LF     35       33          0.588                29.0
+  CF     40       44          0.333                30.1
+  RF     40       24          0.359                35.3
+   (gaps are before clustering; true detectable gaps are larger.)
+
+figures saved to reports/figures/

@@ -1,0 +1,33 @@
+raw rows: 681, games: 28
+dropping 33 rows from 1 game(s) not at Tony Gwynn Stadium: ['CONN'] (flagged home=True in export, different venue id)
+first-pitch timestamps shifted ET->PT: 10 games
+physics check vs 19 reported HR distances: bias -0.3 ft, RMSE 17.8 ft
+no weather file found (data/raw/weather_myf.csv) -> weather columns skipped
+
+=== DATA QUALITY ===
+clean rows: 648 | games: 27
+missing SprayAng: 8 | missing ExitVel/LaunchAng: 47
+non-fair spray (|angle|>45): 27 | foul outs: 19
+spatial_ok rows: 579 | outfield balls (spatial_ok): 308
+light class counts:
+light
+night         251
+day           240
+transition    157
+game types:
+game_type
+mixed        16
+all_day       7
+all_night     4
+results:
+result
+IP_OUT    363
+S         141
+FC         35
+D          34
+HR         21
+SH         14
+ROE        13
+SF         13
+DP          7
+T           7
